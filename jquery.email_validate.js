@@ -1,6 +1,6 @@
 /*!
 * HTML5 Simple (for now) Email validation jQuery Plugin v0.1
-* @link 
+* @link http://github.com/Krule/HTML5-Email-element-validation-jQuery-plugin
 * @author Armin Pašalić <http://ovo.ba>
 *
 * Using email validation regex created by James Watts and Francisco Jose Martin Moreno <http://fightingforalostcause.net/misc/2006/compare-email-regex.php>
