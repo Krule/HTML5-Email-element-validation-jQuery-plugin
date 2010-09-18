@@ -7,11 +7,9 @@ Simple, email validation plugin for HTML 5 input type email element. Activates o
 ### jQuery ###
     $('input[type="email"]').email_validate();    
 ### CSS ###
-Plugin adds `email_validate_error` class to input element (or elements) that failed validation. Something like this:
+Plugin adds `email_validate_error` class to input element (or elements) that failed validation. Something like this should do the trick:
 
     .email_validate_error {
       background: #900;
       color: #fff;
     }
-    
-Or whatever get you going.
