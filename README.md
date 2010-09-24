@@ -1,5 +1,5 @@
 # Simple email validate #
-Simple, email validation plugin for HTML 5 input type email element. Activates on submit and blur (if field is not empty) event. Does not require any additional markup.
+Simple email validation plugin for HTML 5 input type email element. Activates on submit and blur (if field is not empty) event. Does not require any additional markup.
 ## Usage example ##
 ### HTML ###
     <input name="some_name" type="email">
