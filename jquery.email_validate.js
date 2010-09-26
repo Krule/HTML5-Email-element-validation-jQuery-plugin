@@ -1,5 +1,5 @@
 /*!
-* HTML5 Simple (for now) Email validation jQuery Plugin v0.1
+* HTML5 Simple Email validation jQuery Plugin v1.0
 * @link 
 * @author Armin Pašalić <http://ovo.ba>
 *
@@ -9,37 +9,52 @@
 */
 
 (function($){
-    $.email_validate = function(el){
+  
+    $.email_validate = function(el, options){
         var base = this;
         base.$el = $(el);
-        base.el = el;
-        base.$el.data("email_validate", base);
         
-        base.validate = function(event){
-          if (event.type == "blur" && base.$el.val() == ""){
-            base.$el.removeClass("email_validate_error");
-            return false;
-          }
+        base.validate = function(event){          
           var validate_against_regex = /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i
-          if (!validate_against_regex.test(base.$el.val())){
-            event.preventDefault();
-            base.$el.hasClass("email_validate_error") ? null : base.$el.addClass("email_validate_error").focus();
+          !validate_against_regex.test(base.$el.val()) ? base.handle_invalid(event) : base.handle_valid();
+        };
+        
+        base.handle_invalid = function(event){
+          base.$el.trigger('email_validated_as_invalid');
+          if (event.type == "blur" && base.$el.val() == ""){
+            base.$el.removeClass(options.error_css_style);
+            return;
           } else {
-            base.$el.removeClass("email_validate_error");
+            base.$el.focus();
           }
+          event.preventDefault();
+          base.$el.hasClass(options.error_css_style) ? null : base.$el.addClass(options.error_css_style);
+          options.error_message ? base.$el.data("email_validate_error", options.error_message) : null;
+        };
+        
+        base.handle_valid = function(){
+          base.$el.trigger('email_validated_as_valid');
+          base.$el.removeClass(options.error_css_style).removeData("email_validate_error");
         };
         
         base.init = function(){
-          base.$el.bind("blur", base.validate).closest('form').bind("submit", base.validate)
+          base.options = $.extend({},$.email_validate.defaultOptions, options);
+          base.$el.bind("blur", base.validate).closest('form').bind("submit", base.validate);
         };
         
         base.init();
     };
     
-    $.fn.email_validate = function(){
+    $.email_validate.defaultOptions = {
+      error_css_style: "email_validate_error"
+    };
+    
+    
+    $.fn.email_validate = function(options){
         return this.each(function(){
-            (new $.email_validate(this));
+            (new $.email_validate(this, options));
         });
     };
+
     
 })(jQuery);
